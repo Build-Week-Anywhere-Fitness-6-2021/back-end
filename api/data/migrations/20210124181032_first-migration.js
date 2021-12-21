@@ -19,12 +19,12 @@ exports.up = async (knex) => {
     */
     .createTable('users', (tbl) => {
       tbl.increments('user_id')
-      tbl.string('username', 200).notNullable()
+      tbl.string('username', 200).notNullable().unique()
       tbl.string('password', 200).notNullable()
       tbl.string('email', 320).notNullable()
       tbl.timestamps(false, true)
       //JOINING
-      tbl.integer('role')
+      tbl.integer('role_id')
         .unsigned()
         .notNullable()
         .references('role_id')
