@@ -61,3 +61,9 @@ The following tutorial explains how to set up this project using PostgreSQL and 
 
 ### BELOW THIS IS FOR ENDPOINTS:
 - - - - - - - - - - - - - - - - - - - -
+
+BASE URL: 
+
+USERS:
+[GET] /api/users
+[POST] /api/users
