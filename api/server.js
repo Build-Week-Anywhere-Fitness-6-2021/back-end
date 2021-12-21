@@ -32,7 +32,7 @@ server.use(cors())
 //   res.status(201).json(await insertUser(req.body))
 // })
 
-server.use('api/users', usersRouter)
+server.use('/api/users', usersRouter)
 
 //ERRORS
 server.use((err, req, res, next) => { // eslint-disable-line

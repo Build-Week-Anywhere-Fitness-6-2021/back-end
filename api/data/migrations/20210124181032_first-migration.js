@@ -32,7 +32,6 @@ exports.up = async (knex) => {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
     })
-    
 }
 
 exports.down = async (knex) => {
