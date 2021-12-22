@@ -1,9 +1,10 @@
 const express = require('express')
 const helmet = require('helmet')
 const cors = require('cors')
-const db = require('./data/db-config')
+// const db = require('./data/db-config')
 
-const usersRouter = require('./components/users/users-router.js')
+const usersRouter = require('./components/users/users-router')
+const authRouter = require('./auth/auth-router')
 
 // function getAllUsers() { return db('users') }
 
@@ -25,6 +26,7 @@ server.use(helmet())
 server.use(cors())
 
 server.use('/api/users', usersRouter)
+server.use('/api/auth', authRouter)
 
 //ERRORS
 server.use((err, req, res, next) => { // eslint-disable-line

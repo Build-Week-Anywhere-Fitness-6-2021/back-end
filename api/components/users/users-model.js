@@ -13,13 +13,13 @@ module.exports = {
 // connecting users and roles (which should def be altered) i need to have something for clients
 function find() {
   return db("users as u")
-    .join("roles as r", "u.role_id", "=", "r.role_id")
+    .join("roles as r", "u.role_id", "r.role_id")
     .select("u.*", 'r.role_type as role')
 }
 
 function findBy(filter) {
   return db("users as u")
-    .join("roles as r", "u.role_id", "=", "r.role_id")
+    .join("roles as r", "u.role_id", "r.role_id")
     .select("u.user_id", "u.username", "r.role_type as role", "u.password")
     .where(filter)
 }
@@ -27,10 +27,10 @@ function findBy(filter) {
 async function add(user) {
   const [newUserObj] = await db("users").insert(
      {
-        role_id: user.role_id,
         username: user.username,
+        password: user.password,
         email: user.email,
-        password: user.password
+        role_id: user.role_id,
      }, ['username', 'password', 'email', 'role_id']
    );
   return newUserObj
