@@ -17,12 +17,17 @@ function find() {
     .select("u.*", 'r.role_type as role')
 }
 
-function findBy(filter) {
-  return db("users as u")
-    .join("roles as r", "u.role_id", "r.role_id")
-    .select("u.user_id", "u.username", "r.role_type as role", "u.password")
-    .where(filter)
+// async function findBy(filter) {
+//   return await db("users as u")
+//     .join("roles as r", "u.role_id", "r.role_id")
+//     .select("*")
+//     .where(filter)
+// }
+
+async function findBy(filter){
+   return await db('users').where(filter).first()
 }
+
 
 async function add(user) {
   const [newUserObj] = await db("users").insert(

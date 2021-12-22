@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken')
 const { JWT_SECRET } = require('../secrets')
+const User = require('../components/users/users-model')
 
 // AUTHENTICATION
 const restricted = (req, res, next) => {
@@ -34,9 +35,9 @@ const checkRole = role => (req, res, next) => {
 const checkUsernameExists = async (req, res, next) => {
    try {
      const { username } = req.body
-     const [ dbUsername ] = await User.findBy({ username })
+     const dbUsername = await User.findBy({ username })
      if(!dbUsername){
-       return next({status: 401, message: "Invalid credentials"})
+       return next({status: 401, message: "cant find user"})
      } else {
        req.user = dbUsername
        next()
