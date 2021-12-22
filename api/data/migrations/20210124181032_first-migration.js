@@ -26,7 +26,7 @@ exports.up = async (knex) => {
       //JOINING
       tbl.integer('role_id')
         .unsigned()
-        .notNullable()
+        // .notNullable()
         .references('role_id')
         .inTable('roles')
         .onDelete('CASCADE')
