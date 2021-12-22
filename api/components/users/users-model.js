@@ -1,4 +1,3 @@
-
 const db = require("../../data/db-config")
 
 module.exports = {
@@ -20,8 +19,9 @@ async function find() {
 // async function findBy(filter) {
 //   return await db("users as u")
 //     .join("roles as r", "u.role_id", "r.role_id")
-//     .select("*")
+//     .select("u.*")
 //     .where(filter)
+//     .first()
 // }
 
 async function findBy(filter){

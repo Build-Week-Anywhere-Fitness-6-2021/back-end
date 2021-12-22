@@ -1,28 +1,30 @@
 const router = require("express").Router();
-const bcrypt = require("bcryptjs");
 const { tokenBuilder } = require('./auth_helpers');
 const User = require('../components/users/users-model')
 
 const { 
-  checkUsernameExists, 
-  validateRoleName 
+  checkUsernameValid, 
+  validateRoleName,
+  restricted,
+  checkUnusedUsername
 } = require('./auth-middleware');
+
+const bcrypt = require("bcryptjs");
 const { BCRYPT_ROUNDS } = require("../secrets"); // use this secret!
 
-router.post("/register", validateRoleName, (req, res, next) => {
+router.post("/register", checkUnusedUsername, async (req, res, next) => {
   let user = req.body
 
   // save on the db
   const hash = bcrypt.hashSync( user.password, BCRYPT_ROUNDS )
   user.password = hash
 
-  User.add(user)
+  await User.add(user)
     .then(saved =>{
       // res.status(201).json(saved)
       res.status(201).json({ message: `great to see you, ${saved.username}`})
     })
     .catch(next)
-
   /**
    [POST] /api/auth/register { "username": "anna", "password": "1234", "role_name": "angel" }
    
@@ -37,16 +39,20 @@ router.post("/register", validateRoleName, (req, res, next) => {
   });
   
   
-router.post("/login", checkUsernameExists, async (req, res, next) => {
-  let { username, password } = await req.body;
-
-  if( bcrypt.compareSync(password, req.user.password)){
+router.post("/login", checkUsernameValid, /* restricted, */ async (req, res, next) => {
+  let { username, password } = req.body;
+try{
+  // let bdPassword = await User.findBy({ password })
+  if( bcrypt.compareSync(password, await req.user.password)){
     const token = tokenBuilder(req.user)
-    res.json({ message: `${username} is back`, token })
+    res.json({token, username})
     next()
   } else {
     next({ status: 401, message: 'cannot login' })
   }
+} catch(err){
+  next(err)
+}
   
     
   /**
