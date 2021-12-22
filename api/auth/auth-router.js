@@ -37,15 +37,15 @@ router.post("/register", validateRoleName, (req, res, next) => {
   });
   
   
-router.post("/login", checkUsernameExists, (req, res, next) => {
-  let { username, password } = req.body;
+router.post("/login", checkUsernameExists, async (req, res, next) => {
+  let { username, password } = await req.body;
 
   if( bcrypt.compareSync(password, req.user.password)){
     const token = tokenBuilder(req.user)
     res.json({ message: `${username} is back`, token })
     next()
   } else {
-    next({ status: 401, message: 'invalid credentials' })
+    next({ status: 401, message: 'cannot login' })
   }
   
     
