@@ -14,22 +14,22 @@ exports.up = async (knex) => {
       tbl.string('class_kind_name').unique().notNullable()
     })
 
-    /*USERS table
+    /* USERS table
       -  
     */
     .createTable('users', (tbl) => {
       tbl.increments('user_id')
       tbl.string('username', 200)
-        // .notNullable().unique()
+        .notNullable().unique()
       tbl.string('password', 200)
-        // .notNullable()
+        .notNullable()
       tbl.string('email', 320)
-        // .notNullable()
+        .notNullable()
       // tbl.timestamps(false, true)
-      //JOINING
+      // JOINING
       tbl.integer('role_id')
         .unsigned()
-        // .notNullable()
+        .notNullable()
         .references('role_id')
         .inTable('roles')
         .onDelete('CASCADE')

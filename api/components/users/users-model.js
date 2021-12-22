@@ -11,8 +11,8 @@ module.exports = {
 // this is mostly boilerplate - i need to go back thru and fix things
 
 // connecting users and roles (which should def be altered) i need to have something for clients
-function find() {
-  return db("users as u")
+async function find() {
+  return await db("users as u")
     .join("roles as r", "u.role_id", "r.role_id")
     .select("u.*", 'r.role_type as role')
 }
@@ -35,8 +35,13 @@ async function add(user) {
         username: user.username,
         password: user.password,
         email: user.email,
-        role_id: user.role_id,
-     }, ['username', 'password', 'email', 'role_id']
+        role_id: user.role_id ? user.role_id : 1 , //! trying to fix errs
+     }, [
+       'username', 
+       'password', 
+       'email', 
+       'role_id' //! trying to fix errors
+      ]
    );
   return newUserObj
 }
