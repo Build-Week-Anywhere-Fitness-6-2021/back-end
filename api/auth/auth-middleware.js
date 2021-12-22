@@ -27,20 +27,37 @@ const checkRole = role => (req, res, next) => {
 //   } else if (req.decodedJwt.role === role){
 
    } else {
-     next({ status: 403, message: 'you have no power here'})
+     res.status(205).json({ message: 'you do not have permissions (instructor or other)'})
+    //  next({ status: 403, message: 'you have no power here'})
+    next()
   }
 }
 
+const checkUnusedUsername = async (req, res, next)=>{
+  try {
+    const { username } = req.body
+    const dbUsername = await User.findBy({ username })
+    // console.log(dbUsername)
+    if( dbUsername ){
+      return next({ message: "Looks like this username is already in our system"})
+     } else {
+       next()
+    }
+  } catch (err) {
+    next(err)
+  }
+}
 
-const checkUsernameExists = async (req, res, next) => {
+const checkUsernameValid = async (req, res, next) => {
    try {
      const { username } = req.body
      const dbUsername = await User.findBy({ username })
-     if(!dbUsername){
-       return next({status: 401, message: "cant find user"})
-     } else {
+     console.log(dbUsername)
+     if( dbUsername ){
        req.user = dbUsername
        next()
+      } else {
+       return next({status: 401, message: "sorry, cant find you in our system"})
      }
    } catch (err) {
      next(err)
@@ -99,5 +116,6 @@ module.exports = {
   restricted,
   checkRole,
   validateRoleName,
-  checkUsernameExists
+  checkUsernameValid,
+  checkUnusedUsername
 }
