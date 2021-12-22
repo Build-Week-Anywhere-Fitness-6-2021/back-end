@@ -18,8 +18,8 @@ router.post("/register", validateRoleName, (req, res, next) => {
 
   User.add(user)
     .then(saved =>{
-      res.status(201).json(saved)
-      // res.status(201).json({ message: `great to see you, ${saved.username}`})
+      // res.status(201).json(saved)
+      res.status(201).json({ message: `great to see you, ${saved.username}`})
     })
     .catch(next)
 
