@@ -3,15 +3,16 @@ const { JWT_SECRET } = require('../secrets')
 const User = require('../components/users/users-model')
 
 // AUTHENTICATION
-const restricted = (req, res, next) => {
+const restrictedACCESS = (req, res, next) => {
   const token = req.headers.authorization;
   if (!token){
     return next({status: 401, message: 'we needs token'})
   }
   jwt.verify(token, JWT_SECRET, (err, decoded)=>{
     if(err){
-      return next({ status: 404, message: `your token sucks: ${err.mesage}`})
+      return next({ status: 404, message: `your token sucks: ${err.message}`})
     }
+    console.log(decoded)
     req.decodedJwt = decoded
     next()
   })
@@ -19,17 +20,25 @@ const restricted = (req, res, next) => {
 
 // AUTHORIZATION
 // partial application (role => (req, res, next) )=> higher order function
-const checkRole = role => (req, res, next) => {
-  if( req.decodedJwt.role === role){ //! this 'role may need to be changed'
-    // we leverage the information within the token payload
-
-    next()
-//   } else if (req.decodedJwt.role === role){
-
-   } else {
-     res.status(205).json({ message: 'you do not have permissions (instructor or other)'})
-    //  next({ status: 403, message: 'you have no power here'})
-    next()
+const checkRoleLogin = (req, res, next) => {
+  const userRole = req.user.role_id
+  try{
+    if( userRole === 3 ){ //! this 'role may need to be changed'
+      // we leverage the information within the token payload
+      // res.status(200).json( role_id )
+      // console.log( req.decodedJwt.role )
+      // return next({ role: `welcome back ${ req.user.username }` }, req.user )
+      req.role = 'admin'
+      next()
+    } else if ( userRole === 2 ){
+      req.role = 'instructor'
+      next()
+     } else {
+       res.status(404).json({ message: 'you do not have permissions (instructor or other)'})
+      //  next({ status: 403, message: 'you have no power here'})
+    }
+  } catch(err){
+    next(err)
   }
 }
 
@@ -52,7 +61,7 @@ const checkUsernameValid = async (req, res, next) => {
    try {
      const { username } = req.body
      const dbUsername = await User.findBy({ username })
-     console.log(dbUsername)
+    //  console.log( 'dbUsername', dbUsername )
      if( dbUsername ){
        req.user = dbUsername
        next()
@@ -69,6 +78,20 @@ const checkUsernameValid = async (req, res, next) => {
        "message": "Invalid credentials"
      }
    */
+ }
+
+ const checkInstructorCode = (req, res, next) =>{
+   const { instructorCode } = req.body
+   try{
+     if( !instructorCode || instructorCode.trim() !== 'WhosYourDaddy' ){
+       next({ message: `Invalid instructor code ${ instructorCode }`})
+     } else {
+       req.role = 'instructor'
+       next()
+     }
+   } catch(err){
+     next(err)
+   }
  }
  
  
@@ -113,9 +136,11 @@ const checkUsernameValid = async (req, res, next) => {
  }
 
 module.exports = {
-  restricted,
-  checkRole,
-  validateRoleName,
+  checkInstructorCode,
+  restrictedACCESS,
   checkUsernameValid,
-  checkUnusedUsername
+  checkUnusedUsername,
+  // Instructors
+  validateRoleName,
+  checkRoleLogin,
 }

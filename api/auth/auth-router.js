@@ -3,16 +3,19 @@ const { tokenBuilder } = require('./auth_helpers');
 const User = require('../components/users/users-model')
 
 const { 
-  checkUsernameValid, 
-  validateRoleName,
-  restricted,
-  checkUnusedUsername
+  checkUsernameValid,
+  checkRoleLogin,
+  // validateRoleName,
+  // restrictedACCESS,
+  checkUnusedUsername,
 } = require('./auth-middleware');
 
 const bcrypt = require("bcryptjs");
 const { BCRYPT_ROUNDS } = require("../secrets"); // use this secret!
 
-router.post("/register", checkUnusedUsername, async (req, res, next) => {
+router.post("/register", 
+  checkUnusedUsername,
+  async (req, res, next) => {
   let user = req.body
 
   // save on the db
@@ -39,13 +42,17 @@ router.post("/register", checkUnusedUsername, async (req, res, next) => {
   });
   
   
-router.post("/login", checkUsernameValid, /* restricted, */ async (req, res, next) => {
+router.post("/login", 
+  checkUsernameValid, 
+  checkRoleLogin, 
+  async (req, res, next) => {
   let { username, password } = req.body;
 try{
   // let bdPassword = await User.findBy({ password })
   if( bcrypt.compareSync(password, await req.user.password)){
     const token = tokenBuilder(req.user)
-    res.json({token, username})
+    const role = req.role
+    res.json({token, message: `welcome back, ${ username }!! `, role})
     next()
   } else {
     next({ status: 401, message: 'cannot login' })
