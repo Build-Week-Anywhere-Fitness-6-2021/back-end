@@ -62,8 +62,14 @@ The following tutorial explains how to set up this project using PostgreSQL and 
 ### BELOW THIS IS FOR ENDPOINTS:
 - - - - - - - - - - - - - - - - - - - -
 
-BASE URL: 
+BASE URL: https://anywhere-fitness-6-2021.herokuapp.com
 
 USERS:
 [GET] /api/users
-[POST] /api/users
+[POST] /api/users/register : must have an email, username, password (order doesnt matter)
+[POST] /api/users/login : needs username, password
+
+INSTRUCTORS:
+[POST] /api/instructors/register : must have an instructorCode of WhosYourDaddy (as a string) + username, password, email
+[POST] /api/instructors/login : needs username, password
+
