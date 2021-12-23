@@ -11,10 +11,10 @@ const {
    // validateRoleName,
    // restrictedACCESS,
    checkUnusedUsername,
-   checkInstructorCode
+   
  } = require('../../auth/auth-middleware');
 
- const { verifyInstructorRole } = require('./instructor-middleware');
+ const { verifyInstructorRole, checkInstructorCode } = require('./instructor-middleware');
 
 router.post("/register", 
    checkUnusedUsername,
@@ -29,7 +29,7 @@ user.password = hash
 await User.add(user)
   .then(saved =>{
     // res.status(201).json(saved)
-    res.status(201).json({ message: `great to see you, ${saved.username}`})
+    res.status(201).json({ message: `great to see you, ${saved.username}`, role_id: user.role_id})
   })
   .catch(next)
 /**

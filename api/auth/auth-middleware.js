@@ -34,7 +34,7 @@ const checkRoleLogin = (req, res, next) => {
       req.role = 'instructor'
       next()
      } else {
-       res.status(404).json({ message: 'you do not have permissions (instructor or other)'})
+       res.status(404).json({ message: 'failed at middleware checkRoleLogin'})
       //  next({ status: 403, message: 'you have no power here'})
     }
   } catch(err){
@@ -80,21 +80,7 @@ const checkUsernameValid = async (req, res, next) => {
    */
  }
 
- const checkInstructorCode = (req, res, next) =>{
-   const { instructorCode } = req.body
-   try{
-     if( !instructorCode || instructorCode.trim() !== 'WhosYourDaddy' ){
-       next({ message: `Invalid instructor code ${ instructorCode }`})
-     } else {
-       req.role = 'instructor'
-       next()
-     }
-   } catch(err){
-     next(err)
-   }
- }
- 
- 
+
  const validateRoleName = (req, res, next) => {
    try {
      // const [ roleName ] = await User.findBy({ role_name })
@@ -136,7 +122,6 @@ const checkUsernameValid = async (req, res, next) => {
  }
 
 module.exports = {
-  checkInstructorCode,
   restrictedACCESS,
   checkUsernameValid,
   checkUnusedUsername,

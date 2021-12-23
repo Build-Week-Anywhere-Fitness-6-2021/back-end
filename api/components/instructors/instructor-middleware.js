@@ -13,6 +13,21 @@ const verifyInstructorRole = (req, res, next) => {
    
 }
 
+const checkInstructorCode = (req, res, next) =>{
+   const { instructorCode } = req.body
+   try{
+     if( !instructorCode || instructorCode.trim() !== 'WhosYourDaddy' ){
+       return next({ message: `Invalid instructor code ${ instructorCode }`})
+     } else {
+       req.body.role_id = 2
+       next()
+     }
+   } catch(err){
+     next(err)
+   }
+ }
+
 module.exports = {
-   verifyInstructorRole
+   verifyInstructorRole,
+   checkInstructorCode,
 }
