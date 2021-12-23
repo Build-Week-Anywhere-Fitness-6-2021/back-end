@@ -51,7 +51,7 @@ try{
   // let bdPassword = await User.findBy({ password })
   if( bcrypt.compareSync(password, await req.user.password)){
     const token = tokenBuilder(req.user)
-    const role = req.role
+    const role = req.role.trim()
     res.json({token, message: `welcome back, ${ username }!! `, role})
     next()
   } else {
