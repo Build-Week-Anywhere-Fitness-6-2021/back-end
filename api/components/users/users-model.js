@@ -19,7 +19,7 @@ async function find() {
 // async function findBy(filter) {
 //   return await db("users as u")
 //     .join("roles as r", "u.role_id", "r.role_id")
-//     .select("u.*")
+//     .select("*")
 //     .where(filter)
 //     .first()
 // }
@@ -30,7 +30,7 @@ async function findBy(filter){
 
 
 async function add(user) {
-  const [newUserObj] = await db("users").insert(
+  const [ newUserObj ] = await db("users").insert(
      {
         username: user.username,
         password: user.password,
@@ -42,7 +42,7 @@ async function add(user) {
        'email', 
        'role_id' //! trying to fix errors
       ]
-   );
+   ).orderBy("users.role_id");
   return newUserObj
 }
 
