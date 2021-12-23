@@ -5,6 +5,7 @@ const cors = require('cors')
 
 const usersRouter = require('./components/users/users-router')
 const authRouter = require('./auth/auth-router')
+const instructorsRouter = require('./components/instructors/instructors-router')
 
 // function getAllUsers() { return db('users') }
 
@@ -27,6 +28,7 @@ server.use(cors())
 
 server.use('/api/users', usersRouter)
 server.use('/api/auth', authRouter)
+server.use('/api/instructors', instructorsRouter)
 
 //ERRORS
 server.use((err, req, res, next) => { // eslint-disable-line
