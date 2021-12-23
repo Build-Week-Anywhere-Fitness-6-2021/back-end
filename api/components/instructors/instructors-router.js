@@ -46,7 +46,8 @@ await User.add(user)
 });
 
 router.post("/login", 
-      checkUsernameValid, 
+      checkUsernameValid, //todo: will need to change this for instructor i think?
+                           //! will do after i have the db set up to take instructors separately
       checkRoleLogin,
       verifyInstructorRole,
    async (req, res, next) => {
