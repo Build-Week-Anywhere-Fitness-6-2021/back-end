@@ -1,22 +1,24 @@
 const router = require("express").Router();
-// const { tokenBuilder } = require('../../auth/auth_helpers');
-const User = require('../users/users-model')
+const { tokenBuilder } = require('../../auth/auth_helpers');
+const User = require('../users/users-model');
 
 const bcrypt = require("bcryptjs");
 const { BCRYPT_ROUNDS } = require("../../secrets"); // use this secret!
 
 const { 
-   // checkUsernameValid,
-   // checkRoleLogin,
+   checkUsernameValid,
+   checkRoleLogin,
    // validateRoleName,
    // restrictedACCESS,
    checkUnusedUsername,
    checkInstructorCode
  } = require('../../auth/auth-middleware');
 
+ const { verifyInstructorRole } = require('./instructor-middleware');
+
 router.post("/register", 
-checkUnusedUsername,
-checkInstructorCode, 
+   checkUnusedUsername,
+   checkInstructorCode, 
 async (req, res, next) => {
 let user = req.body
 
@@ -43,4 +45,26 @@ await User.add(user)
   */
 });
 
-module.exports = router;
+router.post("/login", 
+      checkUsernameValid, 
+      checkRoleLogin,
+      verifyInstructorRole,
+   async (req, res, next) => {
+   let { username, password } = req.body;
+   try{
+   // let bdPassword = await User.findBy({ password })
+   if( bcrypt.compareSync(password, await req.user.password)){
+      const token = tokenBuilder(req.user)
+      const role = req.role
+      res.json({token, message: `welcome back, ${ username }!! `, role})
+      next()
+   } else {
+      next({ status: 401, message: 'cannot login' })
+   }
+   } catch(err){
+   next(err)
+   }
+});
+  
+
+module.exports = router
