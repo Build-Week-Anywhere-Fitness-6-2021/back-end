@@ -57,7 +57,7 @@ const checkUsernameValid = async (req, res, next) => {
        req.user = dbUsername
        next()
       } else {
-       return next({status: 401, message: "sorry, cant find you in our system"})
+       return res.status(401).json({ message: "sorry, cant find you in our system"})
      }
    } catch (err) {
      next(err)
