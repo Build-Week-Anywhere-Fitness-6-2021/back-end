@@ -6,16 +6,16 @@ exports.up = async (knex) => {
       tbl.string('role_type').notNullable();
     })
 
-    /*CLASSES
-      - shouldnt be able to sign up without a class_kind
+    /* CLASSES_TYPES
+      - want to be able to sort the list by types
     */
-    .createTable('class_kinds', tbl =>{
-      tbl.increments('class_kind_id');
-      tbl.string('class_kind_name').unique().notNullable()
+    .createTable('classes_types', tbl =>{
+      tbl.increments('classes_types_id');
+      tbl.string('classes_types_name').unique().notNullable()
     })
 
     /* USERS table
-      -  
+      -  users need a role that they can sign up with
     */
     .createTable('users', (tbl) => {
       tbl.increments('user_id')
@@ -35,10 +35,58 @@ exports.up = async (knex) => {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
     })
+
+    /* CLASSES_PARTICIPANTS
+    class_participants need:
+        - to be able to count the amount of participants in a class
+    */
+  //todo:  .createTable('classes_participants', )
+
+    /* CLASSES table
+  classes need:
+      - to be able to match with role_id of the people joining
+        .. - instructor teaching in the class must be separated by the clients attending
+      - to be editable with the role_id "instructor" #ONLY#
+      - attendable by clients (and instructors and admins ?)
+      - 
+    */
+   .createTable('classes', tbl=>{
+     tbl.increments('classes_id')
+     tbl.string('classes_name').notNullable().unique()
+     tbl.integer('classes_start').notNullable()
+     tbl.integer('classes_duration').notNullable()
+     tbl.string('classes_location')
+     tbl.integer('classes_max_participants').notNullable()
+     tbl.string('classes_intensity') //? might need to join class_type with another intermediary table to list classes by type
+     tbl.integer('classes_types_id') //! will need to join class_type with another intermediary table to list classes by type
+      .unsigned()
+      .notNullable()
+      .references('classes_types_id').inTable('classes_types')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    //  tbl.integer('classes_participants_id')
+      // .unsigned()
+      // .notNullable()
+      // .references()
+
+    //  tbl.string('classes_capactiy')
+   })
 }
 
 exports.down = async (knex) => {
+  await knex.schema.dropTableIfExists('classes')
+  await knex.schema.dropTableIfExists('classes_participants')
   await knex.schema.dropTableIfExists('users')
-  await knex.schema.dropTableIfExists('class_kinds')
+  await knex.schema.dropTableIfExists('classes_types')
   await knex.schema.dropTableIfExists('roles')
 }
+
+
+{/* <p>Class Name: {props.class.name}</p>
+<p>Class Type: {props.class.type}</p>
+<p>Start Time: {props.class.start}</p>
+<p>Duration: {props.class.duration}</p>
+<p>Intensity: {props.class.intensity}</p>
+<p>Location: {props.class.location}</p>
+<p>Class Capacity: {props.class.registered}/{props.class.maxsize}</p>
+<button>Register for class</button> */}
