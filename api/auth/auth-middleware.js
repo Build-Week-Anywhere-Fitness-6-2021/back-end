@@ -34,11 +34,13 @@ const checkRoleLogin = (req, res, next) => {
       req.role = 'instructor'
       next()
      } else {
-       res.status(404).json({ message: 'failed at middleware checkRoleLogin'})
+       req.role = 'client'
+       next()
+      //  res.status(404).json({ message: 'failed at middleware checkRoleLogin'})
       //  next({ status: 403, message: 'you have no power here'})
     }
   } catch(err){
-    next(err)
+    next(err, "failed at confirmRoleLogin")
   }
 }
 
