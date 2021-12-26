@@ -48,8 +48,8 @@ async function add(user) {
 
 function findById(id) {
   return db("users as u")
-    .join("roles as r", "u.role", "=", "r.id")
-    .select("u.id", "u.username", "r.name as role")
-    .where("u.id", id)
+    .join("roles as r", "u.role_id", "=", "r.role_id")
+    .select("u.id", "u.username", "r.role_type as role")
+    .where("u.user_id", id)
     .first()
 }
