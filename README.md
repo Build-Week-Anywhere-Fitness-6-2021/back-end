@@ -1,3 +1,24 @@
+
+### ENDPOINTS:
+
+BASE URL: https://anywhere-fitness-6-2021.herokuapp.com
+
+USERS:
+- GET ALL USERS: [GET] /api/users
+- REGISTER: [POST] /api/auth/register : must have an email, username, password (order doesnt matter)
+- LOGIN: [POST] /api/auth/login : needs username, password
+
+INSTRUCTORS:
+- REGISTER: [POST] /api/instructors/register : must have an instructorCode of WhosYourDaddy (as a string) + username, password, email
+- LOGIN : [POST] /api/instructors/login : needs username, password
+
+
+- - - - - - -
+
+
+
+
+
 # Build Week Scaffolding for Node and PostgreSQL
 
 ## Video Tutorial
@@ -58,18 +79,4 @@ The following tutorial explains how to set up this project using PostgreSQL and 
 - If you want to edit a migration that has already been released but don't want to lose all the data, make a new migration instead. This is a more realistic flow for production apps: prod databases are never migrated down. We can migrate Heroku down freely only because there's no valuable data from customers in it. In this sense, Heroku is acting more like a staging environment than production.
 
 - If your fronted devs are interested in running the API locally, help them set up PostgreSQL & pgAdmin in their machines, and teach them how to run migrations in their local. This empowers them to (1) help you troubleshoot bugs, (2) obtain the latest code by simply doing `git pull` and (3) work with their own data, without it being wiped every time you roll back the Heroku db. Collaboration is more fun and direct, and you don't need to deploy as often.
-
-### BELOW THIS IS FOR ENDPOINTS:
-- - - - - - - - - - - - - - - - -
-
-BASE URL: https://anywhere-fitness-6-2021.herokuapp.com
-
-USERS:
-- GET ALL USERS: [GET] /api/users
-- REGISTER: [POST] /api/auth/register : must have an email, username, password (order doesnt matter)
-- LOGIN: [POST] /api/auth/login : needs username, password
-
-INSTRUCTORS:
-- REGISTER: [POST] /api/instructors/register : must have an instructorCode of WhosYourDaddy (as a string) + username, password, email
-- LOGIN : [POST] /api/instructors/login : needs username, password
 
