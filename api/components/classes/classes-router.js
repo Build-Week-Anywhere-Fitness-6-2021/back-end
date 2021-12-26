@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const Class = require('./classes_model');
 
-
-router.get('/', async (req, res, next)=>{
-   const classes = await Class.getAll()
+// To get all classes_types
+router.get('/types', async (req, res, next)=>{
+   const classes = await Class.getAllTypes()
    try{
       // console.log(classes)
       res.json(classes)
@@ -12,5 +12,14 @@ router.get('/', async (req, res, next)=>{
    }
 })
 
+
+router.get('/', async (req, res, next)=>{
+   const classes = await Class.getClasses()
+   try{
+      res.json(classes)
+   } catch(err){
+      next(err)
+   }
+})
 
 module.exports = router
