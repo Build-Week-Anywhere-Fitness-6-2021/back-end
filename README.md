@@ -60,7 +60,7 @@ The following tutorial explains how to set up this project using PostgreSQL and 
 - If your fronted devs are interested in running the API locally, help them set up PostgreSQL & pgAdmin in their machines, and teach them how to run migrations in their local. This empowers them to (1) help you troubleshoot bugs, (2) obtain the latest code by simply doing `git pull` and (3) work with their own data, without it being wiped every time you roll back the Heroku db. Collaboration is more fun and direct, and you don't need to deploy as often.
 
 ### BELOW THIS IS FOR ENDPOINTS:
-- - - - - - - - - - - - - - - - - - - -
+- - - - - - - - - - - - - - - - -
 
 BASE URL: https://anywhere-fitness-6-2021.herokuapp.com
 
