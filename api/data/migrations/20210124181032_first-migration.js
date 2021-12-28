@@ -40,7 +40,7 @@ exports.up = async (knex) => {
     class_participants need:
         - to be able to count the amount of participants in a class
     */
-  //todo:  .createTable('classes_participants', )
+  // todo:  .createTable('classes_participants', tbl=>{}) 
 
     /* CLASSES table
   classes need:
@@ -50,7 +50,7 @@ exports.up = async (knex) => {
       - attendable by clients (and instructors and admins ?)
       - 
     */
-   .createTable('classes', tbl=>{
+   .createTable('classes', tbl => {
      tbl.increments('classes_id')
      tbl.string('classes_name').notNullable().unique()
      tbl.string('classes_start').notNullable()

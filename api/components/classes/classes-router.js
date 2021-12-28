@@ -22,4 +22,14 @@ router.get('/', async (req, res, next)=>{
    }
 })
 
+router.post('/', async (req, res, next)=>{
+   const newClass = req.body
+   const classes = await Class.addClass(newClass)
+   try{
+      res.status(201).json( classes )
+   }catch(err){
+      next(err)
+   }
+})
+
 module.exports = router
