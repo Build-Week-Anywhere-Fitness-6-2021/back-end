@@ -12,6 +12,11 @@ INSTRUCTORS:
 - REGISTER: [POST] /api/instructors/register : must have an instructorCode of WhosYourDaddy (as a string) + username, password, email
 - LOGIN : [POST] /api/instructors/login : needs username, password
 
+CLASSES:
+- GET ALL CLASSES: [GET] /api/classes
+- CLASSES TYPES: [GET] api/classes/types
+- NEW CLASS: [POST] api/classes
+
 
 - - - - - - -
 
