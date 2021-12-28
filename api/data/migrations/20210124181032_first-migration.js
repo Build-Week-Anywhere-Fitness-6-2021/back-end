@@ -40,7 +40,22 @@ exports.up = async (knex) => {
     class_participants need:
         - to be able to count the amount of participants in a class
     */
-  // todo:  .createTable('classes_participants', tbl=>{}) 
+    .createTable('classes_participants', tbl=>{
+      tbl.increments('classes_participants_id')
+      tbl.integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('user_id').inTable('users')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE')
+        tbl.integer('classes_id')
+        .unsigned()
+        .notNullable()
+        .references('classes_id').inTable('classes')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE')
+
+    }) 
 
     /* CLASSES table
   classes need:
@@ -68,7 +83,9 @@ exports.up = async (knex) => {
     //  tbl.integer('classes_participants_id')
       // .unsigned()
       // .notNullable()
-      // .references()
+      // .references('classes_participants_id').inTable('classes_participants')
+      // .onDelete('CASCADE')
+      // .onUpdate('CASCADE')
 
     //  tbl.string('classes_capactiy')
    })
