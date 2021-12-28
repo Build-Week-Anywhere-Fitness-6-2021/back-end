@@ -15,7 +15,7 @@ INSTRUCTORS:
 CLASSES:
 - GET ALL CLASSES: [GET] /api/classes
 - CLASSES TYPES: [GET] api/classes/types
-- NEW CLASS: [POST] api/classes
+- NEW CLASS: [POST] api/classes : must have a type, name, start, duration and a max-participants called
 
 
 - - - - - - -
