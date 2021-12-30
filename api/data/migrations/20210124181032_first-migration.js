@@ -73,6 +73,8 @@ exports.up = async (knex) => {
          - to be able to count the amount of participants in a class
      */
   .createTable('classes_participants', tbl=>{
+    //? may need to add a spot for the participants name
+    //? will probably just get it from the user_id leftJoin
     tbl.increments('classes_participants_id')
     tbl.integer('user_id')
       .unsigned()
