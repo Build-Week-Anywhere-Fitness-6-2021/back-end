@@ -5,6 +5,7 @@ module.exports = {
   find,
   findBy,
   findById,
+  count
 }
 
 // this is mostly boilerplate - i need to go back thru and fix things
@@ -27,6 +28,16 @@ async function find() {
 async function findBy(filter){
    return await db('users').where(filter).first()
 }
+
+
+async function count(column){
+  return await db('users').count(column)
+}
+
+//! I HAVE NO IDEA IF THIS IS GONNA WORK
+// async function countSpecific(column, id){
+//   return await db('users').count(column).where('class_id', id === 5)
+// }
 
 
 async function add(user) {

@@ -7,8 +7,19 @@ const {
    checkUnusedUsername
 } = require('../../auth/auth-middleware')
 
+const { verifyPayload } = require('./users-middleware')
+
 router.get('/', async (req, res, next)=>{
    res.json( await User.find())
+})
+
+// this counts every user 
+router.get('/count', async (req, res, next)=>{
+  try{
+    res.json( await User.count('user_id'))
+  } catch(err){
+    next(err)
+  }
 })
 
 // router.post('/', async (req, res, next)=>{
@@ -23,7 +34,7 @@ router.get('/', async (req, res, next)=>{
 // })
 
 
-router.post("/", checkUnusedUsername, async (req, res, next) => {
+router.post("/", checkUnusedUsername, verifyPayload, async (req, res, next) => {
   let user = req.body
 
   // save on the db
