@@ -29,7 +29,7 @@ async function findBy(filter){
    return await db('users').where(filter).first()
 }
 
-
+// to count the number of rows in a column of the table
 async function count(column){
   return await db('users').count(column)
 }
@@ -39,7 +39,7 @@ async function count(column){
 //   return await db('users').count(column).where('class_id', id === 5)
 // }
 
-
+// to addd a user to the list
 async function add(user) {
   const [ newUserObj ] = await db("users").insert(
      {

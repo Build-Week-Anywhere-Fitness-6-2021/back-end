@@ -12,7 +12,7 @@ router.get('/types', async (req, res, next)=>{
    }
 })
 
-
+// for getting classes list
 router.get('/', async (req, res, next)=>{
    const classes = await Class.getClasses()
    try{
@@ -35,6 +35,8 @@ router.get('/', async (req, res, next)=>{
       - classes_type_id
    3. 
 */ 
+
+// adding new classes
 router.post('/', async (req, res, next)=>{
    const newClass = req.body
    const classes = await Class.addClass( newClass )

@@ -27,6 +27,7 @@ server.use(express.json())
 server.use(helmet())
 server.use(cors())
 
+// used for getting users
 server.use('/api/users', usersRouter)
 server.use('/api/auth', authRouter)
 server.use('/api/instructors', instructorsRouter)
