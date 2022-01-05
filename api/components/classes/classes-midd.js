@@ -46,8 +46,8 @@ const checkBody = async (req, res, next) =>{
          return next({ message: 'This class Type does not exist in our system. Please contact an Admin to add it, or select one from the above'})
       } else {
          console.log(dbTypes)
-         res.status(200).json({ classes_types_name: dbTypes.classes_types_name  })
-         next({ classes_types_name: dbTypes.classes_types_name  })
+         //! this is called setting headers -- DONT DO THIS -- res.status(200).json({ classes_types_name: dbTypes.classes_types_name  })
+         // next({ classes_types_name: dbTypes.classes_types_name  })
          next()
       }
    } catch(err){
