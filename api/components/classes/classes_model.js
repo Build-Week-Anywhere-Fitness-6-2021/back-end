@@ -54,10 +54,10 @@ async function findBy(filter){
 }
 
 
-async function getClassTypeName(id){
-      return await db('classes_types as ct')
-      .where('ct.classes_types_id', id)
-         .join('classes as c', 'ct.classes_types_id', 'c.classes_types_id')
-         .select( 'c.*')
-         .first()
-}
+// async function getClassTypeName(id){
+//       return await db('classes_types as ct')
+//       .where('ct.classes_types_id', id)
+//          .join('classes as c', 'ct.classes_types_id', 'c.classes_types_id')
+//          .select( 'c.*')
+//          .first()
+// }
