@@ -38,11 +38,14 @@ router.get('/', async (req, res, next)=>{
 
 // adding new classes
 router.post('/', async (req, res, next)=>{
-   const newClass = req.body
+   const  newClass = req.body
    const classes = await Class.addClass( newClass )
    try{
-      res.status(201).json( classes )
-   }catch(err){
+      console.log(classes)
+      // res.status(200).json( {'class': classes} )
+      res.status(200).json( classes )
+      // next({ message: 'your new class has been added' })
+   } catch(err){
       next(err)
    }
 })

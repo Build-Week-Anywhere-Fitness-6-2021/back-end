@@ -45,12 +45,12 @@ exports.up = async (knex) => {
    */
   .createTable('classes', tbl => {
     tbl.increments('classes_id')
-    tbl.string('classes_name').notNullable().unique()
+    tbl.string('classes_name').notNullable()
     tbl.string('classes_start').notNullable()
     tbl.integer('classes_duration').notNullable()
     tbl.string('classes_location')
     tbl.integer('classes_registered')
-    tbl.integer('classes_max_participants').notNullable()
+    tbl.integer('classes_maxsize').notNullable()
     tbl.string('classes_intensity') //? might need to join class_type with another intermediary table to list classes by type
     tbl.integer('classes_types_id') //! will need to join class_type with another intermediary table to list classes by type
     .unsigned()

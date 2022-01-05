@@ -27,17 +27,18 @@ async function addClass(classi){
    //    classes_duration: classi.classes_duration,
    //    classes_location: classi.classes_location,
    //    classes_registered: classi.classes_registered,
-   //    classes_max_participants: classi.classes_max_participants,
+   //    classes_maxsize: classi.classes_maxsize,
    //    classes_intensity: classi.classes_intensity,
    //    classes_types_id: classi.classes_types_id,
-   // } 
-   classi, [
+   // },
+   classi, 
+   [
          'classes_name',
          'classes_start',
          'classes_duration',
          'classes_location',
          'classes_registered',
-         'classes_max_participants',
+         'classes_maxsize',
          'classes_intensity',
          'classes_types_id',
       ]

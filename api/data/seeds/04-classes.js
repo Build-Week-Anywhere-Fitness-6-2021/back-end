@@ -10,7 +10,7 @@ exports.seed = function(knex) {
       classes_intensity: "low",
       classes_location: "north",
       classes_registered: 1,
-      classes_max_participants: 4,
+      classes_maxsize: 4,
   },
   {
       classes_name: "Cycle Sadness",
@@ -20,7 +20,7 @@ exports.seed = function(knex) {
       classes_intensity: "high",
       classes_location: "south",
       classes_registered: 3,
-      classes_max_participants: 8
+      classes_maxsize: 8
   },
   {
       classes_name: "Boulder Fletching",
@@ -30,7 +30,7 @@ exports.seed = function(knex) {
       classes_intensity: "high",
       classes_location: "south",
       classes_registered: 5,
-      classes_max_participants: 10
+      classes_maxsize: 10
   },
   {
       classes_name: "Boulder Crushing",
@@ -40,7 +40,7 @@ exports.seed = function(knex) {
       classes_intensity: "high",
       classes_location: "south",
       classes_registered: 5,
-      classes_max_participants: 10
+      classes_maxsize: 10
   },
   ]);
 };
