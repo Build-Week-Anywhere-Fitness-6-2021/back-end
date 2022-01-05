@@ -3,7 +3,7 @@ const Class = require('./classes_model');
 const {
    checkMax,
    checkName,
-   // checkBody
+   checkBody
 } = require('./classes-midd')
 
 // To get all classes_types
@@ -43,9 +43,9 @@ router.get('/', async (req, res, next)=>{
 
 // adding new classes
 router.post('/', 
-   checkMax,
-   checkName,
-   // checkBody,
+   // checkMax,
+   // checkName,
+   checkBody,
 async (req, res, next)=>{
    const newClass = req.body
    const classes = await Class.addClass( newClass )
@@ -53,7 +53,7 @@ async (req, res, next)=>{
       // console.log(classes)
       // res.status(200).json( {'class': classes} )
       res.status(200).json( classes )
-      next({ message: 'your new class has been added' })
+      // next({ message: 'your new class has been added' })
    } catch(err){
       next(err)
    }

@@ -25,7 +25,7 @@ const checkName = async (req, res, next) =>{
          res.status(400).json({ message: 'In order to distinguish classes, please think of a more unique name! This Class Name is already taken.' })
       } else {
          // res.status(200).json({ classes_name })
-         res.status(200).json({message: 'your class was added!'})
+         // res.status(200).json({message: 'your class was added!'})
          next()
       }
    } catch(err){
@@ -33,27 +33,30 @@ const checkName = async (req, res, next) =>{
    }
 }
 
-// const checkBody = (req, res, next) =>{
-//    const { classes_start, classes_duration, classes_types_id} = req.body;
-//    //todo: const dbTypes = Class.findById 
-//    //?
-//    try{
-//       if( !classes_start || !classes_duration || !classes_types_id ){
-//          return next({ message: 'You must have both a Start Time and a Duration stated in the above form '})
-//       // } else if ( !classes_types_id ){
-//       //    return next({ message: 'you need to submit a class'})
-//       //todo: } else if ( classes_types_id !== dbTypes ){
-//       //    return next({ message: 'This class Type does not exist in our system. Please contact an Admin to add it, or select one from the above'})
-//       } else {
-//          next()
-//       }
-//    } catch(err){
-//       next(err)
-//    }
-// }
+const checkBody = async (req, res, next) =>{
+   const { classes_start, classes_duration, classes_types_id } = req.body;
+   const dbTypes = await Class.findById( classes_types_id )
+   //?
+   try{
+      if( !classes_start || !classes_duration || !classes_types_id ){
+         return next({ message: 'You must have both a Start Time and a Duration stated in the above form '})
+      // } else if ( !classes_types_id ){
+      //    return next({ message: 'you need to submit a class'})
+      } else if ( classes_types_id !== dbTypes.classes_types_id ){
+         return next({ message: 'This class Type does not exist in our system. Please contact an Admin to add it, or select one from the above'})
+      } else {
+         console.log(dbTypes)
+         res.status(200).json({ classes_types_name: dbTypes.classes_types_name  })
+         next({ classes_types_name: dbTypes.classes_types_name  })
+         next()
+      }
+   } catch(err){
+      next(err)
+   }
+}
 
 module.exports = {
    checkMax,
    checkName,
-   // checkBody
+   checkBody
 }
