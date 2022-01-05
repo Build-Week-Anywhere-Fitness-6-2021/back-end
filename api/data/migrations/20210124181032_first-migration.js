@@ -35,48 +35,66 @@ exports.up = async (knex) => {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
     })
+   
+   /* CLASSES table
+   classes need:
+   - to be able to match with role_id of the people joining
+      - instructor teaching in the class must be separated by the clients attending
+   - to be editable with the role_id "instructor" #ONLY#
+   - attendable by clients (and instructors and admins ?)
+   */
+  .createTable('classes', tbl => {
+    tbl.increments('classes_id')
+    tbl.string('classes_name').notNullable()
+      .unique()
+    tbl.string('classes_start').notNullable()
+    tbl.integer('classes_duration').notNullable()
+    tbl.string('classes_location')
+    tbl.integer('classes_registered')
+    tbl.integer('classes_maxsize').notNullable()
+    tbl.string('classes_intensity') //? might need to join class_type with another intermediary table to list classes by type
+    tbl.integer('classes_types_id') //! will need to join class_type with another intermediary table to list classes by type
+    .unsigned()
+    .notNullable()
+    .references('classes_types_id').inTable('classes_types')
+    .onDelete('CASCADE')
+    .onUpdate('CASCADE')
+    //  tbl.integer('classes_participants_id')
+    // .unsigned()
+    // .notNullable()
+    // .references('classes_participants_id').inTable('classes_participants')
+    // .onDelete('CASCADE')
+    // .onUpdate('CASCADE')
+    
+    //  tbl.string('classes_capactiy')
+  })
 
-    /* CLASSES_PARTICIPANTS
-    class_participants need:
-        - to be able to count the amount of participants in a class
-    */
-  // todo:  .createTable('classes_participants', tbl=>{}) 
-
-    /* CLASSES table
-  classes need:
-      - to be able to match with role_id of the people joining
-        .. - instructor teaching in the class must be separated by the clients attending
-      - to be editable with the role_id "instructor" #ONLY#
-      - attendable by clients (and instructors and admins ?)
-      - 
-    */
-   .createTable('classes', tbl => {
-     tbl.increments('classes_id')
-     tbl.string('classes_name').notNullable().unique()
-     tbl.string('classes_start').notNullable()
-     tbl.integer('classes_duration').notNullable()
-     tbl.string('classes_location')
-     tbl.integer('classes_registered')
-     tbl.integer('classes_max_participants').notNullable()
-     tbl.string('classes_intensity') //? might need to join class_type with another intermediary table to list classes by type
-     tbl.integer('classes_types_id') //! will need to join class_type with another intermediary table to list classes by type
+  /* CLASSES_PARTICIPANTS
+     class_participants need:
+         - to be able to count the amount of participants in a class
+     */
+  .createTable('classes_participants', tbl=>{
+    //? may need to add a spot for the participants name
+    //? will probably just get it from the user_id leftJoin
+    tbl.increments('classes_participants_id')
+    tbl.integer('user_id')
       .unsigned()
       .notNullable()
-      .references('classes_types_id').inTable('classes_types')
+      .references('user_id').inTable('users')
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
-    //  tbl.integer('classes_participants_id')
-      // .unsigned()
-      // .notNullable()
-      // .references()
-
-    //  tbl.string('classes_capactiy')
-   })
+    tbl.integer('classes_id')
+      .unsigned()
+      .notNullable()
+      .references('classes_id').inTable('classes')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+  }) 
 }
 
 exports.down = async (knex) => {
+  await knex.schema.dropTableIfExists('classes_participants')
   await knex.schema.dropTableIfExists('classes')
-  // await knex.schema.dropTableIfExists('classes_participants')
   await knex.schema.dropTableIfExists('users')
   await knex.schema.dropTableIfExists('classes_types')
   await knex.schema.dropTableIfExists('roles')

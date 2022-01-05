@@ -18,6 +18,10 @@ CLASSES:
 - NEW CLASS: [POST] api/classes : must have a type, name, start, duration and a max-participants called
 
 
+
+
+
+
 - - - - - - -
 
 
