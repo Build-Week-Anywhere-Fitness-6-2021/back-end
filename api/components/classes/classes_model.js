@@ -5,7 +5,7 @@ module.exports = {
    getClasses,
    addClass,
    findBy,
-   findById
+   // findById
 }
 
 async function getAllTypes() {
@@ -53,10 +53,11 @@ async function findBy(filter){
    return await db('classes').where(filter).first()
 }
 
-async function findById(id) {
-   return await db('classes_types as ct')
-      // .join('classes as c', 'ct.classes_types_id', 'c.classes_types_id')
-      .select('ct.*')
-      .where('classes_types_id', id)
-      .first()
+
+async function getClassTypeName(id){
+      return await db('classes_types as ct')
+      .where('ct.classes_types_id', id)
+         .join('classes as c', 'ct.classes_types_id', 'c.classes_types_id')
+         .select( 'c.*')
+         .first()
 }

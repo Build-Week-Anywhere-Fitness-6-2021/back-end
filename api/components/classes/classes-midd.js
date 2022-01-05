@@ -35,19 +35,20 @@ const checkName = async (req, res, next) =>{
 
 const checkBody = async (req, res, next) =>{
    const { classes_start, classes_duration, classes_types_id } = req.body;
-   const dbTypes = await Class.findById( classes_types_id )
+   const dbTypes = await Class.findBy({ classes_types_id })
    //?
    try{
       if( !classes_start || !classes_duration || !classes_types_id ){
          return next({ message: 'You must have both a Start Time and a Duration stated in the above form '})
       // } else if ( !classes_types_id ){
       //    return next({ message: 'you need to submit a class'})
-      } else if ( classes_types_id !== dbTypes.classes_types_id ){
+      } else if ( !dbTypes ){
          return next({ message: 'This class Type does not exist in our system. Please contact an Admin to add it, or select one from the above'})
       } else {
          console.log(dbTypes)
          //! this is called setting headers -- DONT DO THIS -- res.status(200).json({ classes_types_name: dbTypes.classes_types_name  })
          // next({ classes_types_name: dbTypes.classes_types_name  })
+         // req.classes_types_name = dbTypes.classes_types_name
          next()
       }
    } catch(err){
