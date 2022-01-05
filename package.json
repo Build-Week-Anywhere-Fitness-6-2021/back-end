@@ -12,6 +12,7 @@
     "databaseh": "heroku pg:psql -a anywhere-fitness-6-2021",
     "seedh": "heroku run knex seed:run -a anywhere-fitness-6-2021",
     "test": "cross-env NODE_ENV=testing jest --verbose --runInBand",
+    "logs": "heroku logs --source anywhere-fitness-6-2021 --tail", 
     "deploy": "git push heroku main"
   },
   "engines": {
