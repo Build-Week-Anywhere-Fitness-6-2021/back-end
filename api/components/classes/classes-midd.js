@@ -1,5 +1,16 @@
 const Class = require('./classes_model')
 
+//todo: const convertTypeName = async (req, res, next)=>{
+//    let name = await Class.convertTypeName( req.body.classes_types_id ) 
+//    try{
+//       if( !name ){
+//          return next({ message: 'there is no name' })
+//       } else( next() )
+//    } catch(err){
+//       next(err)
+//    }
+// }
+
 // must have a max-participants greater than 1
 const checkMax = (req, res, next) =>{
    const { classes_maxsize } = req.body

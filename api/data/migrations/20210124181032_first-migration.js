@@ -46,7 +46,7 @@ exports.up = async (knex) => {
   .createTable('classes', tbl => {
     tbl.increments('classes_id')
     tbl.string('classes_name').notNullable()
-      // .unique()
+      .unique()
     tbl.string('classes_start').notNullable()
     tbl.integer('classes_duration').notNullable()
     tbl.string('classes_location')
