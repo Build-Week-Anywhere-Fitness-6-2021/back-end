@@ -4,6 +4,7 @@ module.exports = {
    getAllTypes,
    getClasses,
    addClass,
+   findBy
 }
 
 async function getAllTypes() {
@@ -44,4 +45,8 @@ async function addClass(classi){
       ]
    )
    return newClassObj
+}
+
+async function findBy(filter){
+   return await db('classes').where(filter).first()
 }

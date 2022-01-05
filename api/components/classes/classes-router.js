@@ -1,5 +1,10 @@
 const router = require('express').Router();
 const Class = require('./classes_model');
+const {
+   checkMax,
+   checkName,
+   // checkBody
+} = require('./classes-midd')
 
 // To get all classes_types
 router.get('/types', async (req, res, next)=>{
@@ -37,14 +42,18 @@ router.get('/', async (req, res, next)=>{
 */ 
 
 // adding new classes
-router.post('/', async (req, res, next)=>{
-   const  newClass = req.body
+router.post('/', 
+   checkMax,
+   checkName,
+   // checkBody,
+async (req, res, next)=>{
+   const newClass = req.body
    const classes = await Class.addClass( newClass )
    try{
-      console.log(classes)
+      // console.log(classes)
       // res.status(200).json( {'class': classes} )
       res.status(200).json( classes )
-      // next({ message: 'your new class has been added' })
+      next({ message: 'your new class has been added' })
    } catch(err){
       next(err)
    }
