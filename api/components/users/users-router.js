@@ -59,6 +59,29 @@ router.post("/", checkUnusedUsername, verifyPayload, async (req, res, next) => {
      "role_name": "angel"
     }
     */
+
+// [PUT] should be able to edit a user with a given id
+  router.put('/:user_id', 
+    // verifyPayload, 
+    async (req, res, next)=>{
+    const { user_id }  = req.params
+    const { username, email, password } = req.body
+    const updatedUser = await User.update( user_id, { email, password, username })
+    try{
+      if( user_id ){ 
+        return res.status(400).json({ message: 'cant seem to find this id' })
+      } else {
+        console.log('this might be working')
+        return res.status(200).json( updatedUser )
+      }
+    } catch(err){
+      next(err)
+    }
+  })
+
+  router.get('/:id')
+
+
   });
 
 

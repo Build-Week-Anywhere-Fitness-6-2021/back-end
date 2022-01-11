@@ -5,7 +5,8 @@ module.exports = {
   find,
   findBy,
   findById,
-  count
+  count,
+  update,
 }
 
 // this is mostly boilerplate - i need to go back thru and fix things
@@ -62,5 +63,13 @@ function findById(id) {
     .join("roles as r", "u.role_id", "=", "r.role_id")
     .select("u.id", "u.username", "r.role_type as role")
     .where("u.user_id", id)
+    .first()
+}
+
+function update( id, changes ) {
+  return db('users as u')
+    .select('u.user_id', id)
+    .update('u.username', changes)
+    .where('u.user_id', id)
     .first()
 }
