@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const User = require('./users-model')
-const bcrypt = require("bcryptjs");
-const { BCRYPT_ROUNDS } = require("../../secrets"); // use this secret!
+const bcrypt = require("bcryptjs")
+const { BCRYPT_ROUNDS } = require("../../secrets") // use this secret!
 
 const {
    checkUnusedUsername
@@ -47,6 +47,7 @@ router.post("/", checkUnusedUsername, verifyPayload, async (req, res, next) => {
       res.status(201).json({ message: `great to see you, ${saved.username}`})
     })
     .catch(next)
+  })
 
   /**
    [POST] /api/auth/register { "username": "anna", "password": "1234", "role_name": "angel" }
@@ -68,21 +69,23 @@ router.post("/", checkUnusedUsername, verifyPayload, async (req, res, next) => {
     const { username, email, password } = req.body
     const updatedUser = await User.update( user_id, { email, password, username })
     try{
-      if( user_id ){ 
-        return res.status(400).json({ message: 'cant seem to find this id' })
+      if( !user_id ){ 
+        res.status(400).json({ message: 'cant seem to find this id' })
       } else {
         console.log('this might be working')
-        return res.status(200).json( updatedUser )
+        res.status(200).json( updatedUser )
       }
     } catch(err){
       next(err)
     }
   })
 
-  router.get('/:id')
+  // router.get('/:id', (req, res, next)=>{
+    
+  // })
 
 
-  });
+ 
 
 
 module.exports = router

@@ -54,7 +54,7 @@ async function add(user) {
        'email', 
        'role_id' //! trying to fix errors
       ]
-   ).orderBy("users.role_id");
+   ).orderBy("users.role_id")
   return newUserObj
 }
 
@@ -66,10 +66,14 @@ function findById(id) {
     .first()
 }
 
-function update( id, changes ) {
-  return db('users as u')
-    .select('u.user_id', id)
-    .update('u.username', changes)
+async function update(id, changes) {
+  await db('users as u')
+    // .select('u.user_id', id)
     .where('u.user_id', id)
-    .first()
+    .update('u.username', changes)
+    .then(id => {
+      return findById(id)
+    })
+    // return rows
+    // .first()
 }

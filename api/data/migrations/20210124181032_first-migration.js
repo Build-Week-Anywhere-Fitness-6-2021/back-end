@@ -3,14 +3,14 @@ exports.up = async (knex) => {
     // ROLES first
     .createTable("roles", tbl=>{
       tbl.increments('role_id')
-      tbl.string('role_type').notNullable();
+      tbl.string('role_type').notNullable()
     })
 
     /* CLASSES_TYPES
       - want to be able to sort the list by types
     */
     .createTable('classes_types', tbl =>{
-      tbl.increments('classes_types_id');
+      tbl.increments('classes_types_id')
       tbl.string('classes_types_name').unique().notNullable()
     })
 
